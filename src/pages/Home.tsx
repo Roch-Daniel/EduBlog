@@ -31,11 +31,13 @@ export default function Home() {
 
         const publishedPosts = postsResponse
           .filter(
-            (post) => normalizeText(post.status.label) === normalizeText("Publicado"),
+            (post) =>
+              normalizeText(post.status.label) === normalizeText("Publicado"),
           )
           .sort(
             (left, right) =>
-              new Date(right.createDate).getTime() - new Date(left.createDate).getTime(),
+              new Date(right.createDate).getTime() -
+              new Date(left.createDate).getTime(),
           );
 
         const activeDisciplines = disciplinesResponse
@@ -63,7 +65,8 @@ export default function Home() {
 
   const featuredPosts = useMemo(() => posts.slice(0, 4), [posts]);
 
-  const currentSlideIndex = featuredPosts.length === 0 ? 0 : activeSlide % featuredPosts.length;
+  const currentSlideIndex =
+    featuredPosts.length === 0 ? 0 : activeSlide % featuredPosts.length;
 
   useEffect(() => {
     if (featuredPosts.length <= 1) return;
@@ -81,7 +84,9 @@ export default function Home() {
     return (
       <div className="mx-auto flex min-h-[60vh] w-[min(1200px,92%)] items-center justify-center py-8">
         <div className="rounded-[14px] border border-slate-200 bg-white px-8 py-6 shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
-          <p className="text-base font-medium text-slate-500">Carregando conteúdos da Home...</p>
+          <p className="text-base font-medium text-slate-500">
+            Carregando conteúdos da Home...
+          </p>
         </div>
       </div>
     );
@@ -91,7 +96,9 @@ export default function Home() {
     return (
       <div className="mx-auto flex min-h-[60vh] w-[min(1200px,92%)] items-center justify-center py-8">
         <div className="flex flex-col items-center gap-4 rounded-[14px] border border-rose-200 bg-white p-10 text-center shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
-          <h1 className="text-2xl font-bold text-slate-900">Home indisponível</h1>
+          <h1 className="text-2xl font-bold text-slate-900">
+            Home indisponível
+          </h1>
           <p className="max-w-xl text-sm text-slate-600">{loadError}</p>
         </div>
       </div>
@@ -100,101 +107,111 @@ export default function Home() {
 
   return (
     <div className="mx-auto flex w-[min(1200px,92%)] flex-col gap-9 py-6">
-        <section className="home-section">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-slate-900">Destaques da Semana</h2>
-          </div>
+      <section className="home-section">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-slate-900">
+            Destaques da Semana
+          </h2>
+        </div>
 
-          <div className="relative min-h-[320px] overflow-hidden rounded-[16px] shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
-            {featuredPosts.map((post, index) => (
-              <article
-                key={post._id}
-                className={`absolute inset-0 grid h-full bg-white transition-opacity duration-500 md:grid-cols-[1.1fr_1fr] ${
-                  index === currentSlideIndex
-                    ? "pointer-events-auto opacity-100"
-                    : "pointer-events-none opacity-0"
-                }`}
-              >
-                <img
-                  src={post.imageUrl}
-                  alt={post.title}
-                  className="h-full w-full object-cover"
-                />
-                <div className="flex flex-col justify-center gap-3 p-8">
-                  <h3 className="text-2xl font-bold text-slate-900">{post.title}</h3>
-                  <p className="text-sm leading-6 text-slate-500">{post.summary}</p>
-                  <p className="text-sm text-slate-500">
-                    {post.author.name} | {formatDate(post.createDate)}
-                  </p>
-                  <Link
-                    to={`/conteudo/${slugifyDisciplineLabel(post.discipline.label)}?post=${post._id}`}
-                    className="w-fit rounded-[10px] bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white"
-                  >
-                    Ler aula
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-3 flex justify-center gap-2">
-            {featuredPosts.map((post, index) => (
-              <button
-                key={post._id}
-                type="button"
-                onClick={() => setActiveSlide(index)}
-                aria-label={`Ir para destaque ${index + 1}`}
-                className={`h-3 w-3 rounded-full border-2 transition ${
-                  index === currentSlideIndex
-                    ? "border-teal-700 bg-teal-100"
-                    : "border-dotted border-slate-400 bg-transparent"
-                }`}
+        <div className="relative min-h-80 overflow-hidden rounded-2xl shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
+          {featuredPosts.map((post, index) => (
+            <article
+              key={post._id}
+              className={`absolute inset-0 grid h-full bg-white transition-opacity duration-500 md:grid-cols-[1.1fr_1fr] ${
+                index === currentSlideIndex
+                  ? "pointer-events-auto opacity-100"
+                  : "pointer-events-none opacity-0"
+              }`}
+            >
+              <img
+                src={post.imageUrl}
+                alt={post.title}
+                className="h-full w-full object-cover"
               />
-            ))}
-          </div>
-        </section>
-
-        <section className="home-section">
-          <div className="mb-4 flex items-center justify-between gap-4">
-            <h2 className="text-2xl font-bold text-slate-900">Disciplinas</h2>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {disciplines.map((discipline) => {
-              const disciplinePosts = posts.filter(
-                (post) => post.discipline._id === discipline._id,
-              );
-              const previewPost = disciplinePosts[0] ?? null;
-
-              return (
+              <div className="flex flex-col justify-center gap-3 p-8">
+                <h3 className="text-2xl font-bold text-slate-900">
+                  {post.title}
+                </h3>
+                <p className="text-sm leading-6 text-slate-500">
+                  {post.summary}
+                </p>
+                <p className="text-sm text-slate-500">
+                  {post.author.name} | {formatDate(post.createDate)}
+                </p>
                 <Link
-                  key={discipline._id}
-                  to={`/conteudo/${slugifyDisciplineLabel(discipline.label)}`}
-                  className="group overflow-hidden rounded-[14px] bg-white text-left shadow-[0_4px_18px_rgba(15,23,42,0.07)] transition hover:-translate-y-1 hover:shadow-[0_10px_24px_rgba(15,23,42,0.12)]"
+                  to={`/conteudo/${slugifyDisciplineLabel(post.discipline.label)}?post=${post._id}`}
+                  className="w-fit rounded-[10px] bg-teal-700 px-4 py-2.5 text-sm font-semibold text-white"
                 >
-                  {previewPost ? (
-                    <img
-                      src={previewPost.imageUrl}
-                      alt={discipline.label}
-                      className="h-[200px] w-full object-cover transition duration-300 group-hover:scale-[1.04]"
-                    />
-                  ) : (
-                    <div className="flex h-52 items-center justify-center bg-[linear-gradient(135deg,#ccfbf1,#99f6e4,#e2e8f0)] px-6">
-                      <span className="text-center text-3xl font-bold tracking-[0.18em] text-slate-700">
-                        {discipline.label.slice(0, 3).toUpperCase()}
-                      </span>
-                    </div>
-                  )}
-
-                  <div className="p-4">
-                    <h3 className="text-xl font-bold text-slate-900">{discipline.label}</h3>
-                    <p className="mt-2 text-sm text-slate-500">{disciplinePosts.length} posts</p>
-                  </div>
+                  Ler aula
                 </Link>
-              );
-            })}
-          </div>
-        </section>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-3 flex justify-center gap-2">
+          {featuredPosts.map((post, index) => (
+            <button
+              key={post._id}
+              type="button"
+              onClick={() => setActiveSlide(index)}
+              aria-label={`Ir para destaque ${index + 1}`}
+              className={`h-3 w-3 rounded-full border-2 transition ${
+                index === currentSlideIndex
+                  ? "border-teal-700 bg-teal-100"
+                  : "border-dotted border-slate-400 bg-transparent"
+              }`}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="home-section">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <h2 className="text-2xl font-bold text-slate-900">Disciplinas</h2>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {disciplines.map((discipline) => {
+            const disciplinePosts = posts.filter(
+              (post) => post.discipline._id === discipline._id,
+            );
+            const previewPost = disciplinePosts[0] ?? null;
+
+            return (
+              <Link
+                key={discipline._id}
+                to={`/conteudo/${slugifyDisciplineLabel(discipline.label)}`}
+                className="group overflow-hidden rounded-[14px] bg-white text-left shadow-[0_4px_18px_rgba(15,23,42,0.07)] transition hover:-translate-y-1 hover:shadow-[0_10px_24px_rgba(15,23,42,0.12)]"
+              >
+                {previewPost ? (
+                  <img
+                    src={previewPost.imageUrl}
+                    alt={discipline.label}
+                    className="min-h-80 w-full object-cover transition duration-300 group-hover:scale-[1.04]"
+                  />
+                ) : (
+                  <div className="flex h-52 items-center justify-center bg-[linear-gradient(135deg,#ccfbf1,#99f6e4,#e2e8f0)] px-6">
+                    <span className="text-center text-3xl font-bold tracking-[0.18em] text-slate-700">
+                      {discipline.label.slice(0, 3).toUpperCase()}
+                    </span>
+                  </div>
+                )}
+
+                <div className="p-4">
+                  <h3 className="text-xl font-bold text-slate-900">
+                    {discipline.label}
+                  </h3>
+                  <p className="mt-2 text-sm text-slate-500">
+                    {disciplinePosts.length} posts
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 }
