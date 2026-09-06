@@ -81,7 +81,7 @@ export default function SearchBar({ disciplines, posts }: ISearchBarProps) {
         id: `professor-${post.author.name}`,
         label: post.author.name,
         description: `Professor · ${post.discipline.label}`,
-        to: `/busca?q=${encodeURIComponent(post.author.name)}`,
+        to: `/busca?author=${encodeURIComponent(post.author.name)}`,
         kind: "professor" as const,
       }));
 

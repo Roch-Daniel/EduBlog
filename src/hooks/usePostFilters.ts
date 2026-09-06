@@ -20,7 +20,7 @@ export function usePostFilters() {
     () => ({
       series: parseList(searchParams.get("serie")),
       semesters: parseList(searchParams.get("semestre")),
-      professor: searchParams.get("prof") ?? "",
+      professor: searchParams.get("author") ?? searchParams.get("prof") ?? "",
       search: searchParams.get("q") ?? "",
     }),
     [searchParams],
@@ -30,7 +30,8 @@ export function usePostFilters() {
   const sortOrder: SortOrder =
     sortParam === "antigos" || sortParam === "titulo" ? sortParam : "recentes";
 
-  const viewMode: ViewMode = searchParams.get("view") === "lista" ? "lista" : "grid";
+  const viewMode: ViewMode =
+    searchParams.get("view") === "lista" ? "lista" : "grid";
   const page = Number(searchParams.get("page")) || 1;
 
   const activeFilterCount =
@@ -78,7 +79,7 @@ export function usePostFilters() {
   }
 
   function setProfessor(value: string) {
-    updateParams({ prof: value });
+    updateParams({ author: value, prof: "" });
   }
 
   function setViewMode(value: ViewMode) {
@@ -90,7 +91,7 @@ export function usePostFilters() {
   }
 
   function clearFilters() {
-    updateParams({ serie: "", semestre: "", prof: "" });
+    updateParams({ serie: "", semestre: "", author: "", prof: "" });
   }
 
   return {

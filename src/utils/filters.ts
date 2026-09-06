@@ -8,12 +8,16 @@ function buildOptions(
   formatLabel: (value: string) => string = (value) => value,
 ): IFilterOption[] {
   const uniqueValues = Array.from(
-    new Set(values.map((value) => value.trim()).filter((value) => value.length > 0)),
+    new Set(
+      values.map((value) => value.trim()).filter((value) => value.length > 0),
+    ),
   );
 
   return uniqueValues
     .map((value) => ({ value, label: formatLabel(value) }))
-    .sort((left, right) => left.label.localeCompare(right.label, "pt-BR", { numeric: true }));
+    .sort((left, right) =>
+      left.label.localeCompare(right.label, "pt-BR", { numeric: true }),
+    );
 }
 
 function formatSemesterLabel(value: string) {
@@ -29,7 +33,10 @@ export function buildSeriesOptions(posts: IPost[]) {
 }
 
 export function buildSemesterOptions(posts: IPost[]) {
-  return buildOptions(posts.map((post) => post.semester), formatSemesterLabel);
+  return buildOptions(
+    posts.map((post) => post.semester),
+    formatSemesterLabel,
+  );
 }
 
 export function buildProfessorOptions(posts: IPost[]) {
@@ -40,17 +47,28 @@ export function applyPostFilters(posts: IPost[], filters: IPostFilters) {
   return posts.filter((post) => {
     const matchesSeries =
       filters.series.length === 0 ||
-      filters.series.some((value) => normalizeText(value) === normalizeText(post.series));
+      filters.series.some(
+        (value) => normalizeText(value) === normalizeText(post.series),
+      );
 
     const matchesSemester =
       filters.semesters.length === 0 ||
-      filters.semesters.some((value) => normalizeText(value) === normalizeText(post.semester));
+      filters.semesters.some(
+        (value) => normalizeText(value) === normalizeText(post.semester),
+      );
 
-    return matchesSeries && matchesSemester;
+    const matchesProfessor =
+      !filters.professor ||
+      normalizeText(post.author.name) === normalizeText(filters.professor);
+
+    return matchesSeries && matchesSemester && matchesProfessor;
   });
 }
 
-export function buildSearchParams(filters: IPostFilters, disciplineLabel?: string) {
+export function buildSearchParams(
+  filters: IPostFilters,
+  disciplineLabel?: string,
+) {
   const params = new URLSearchParams();
 
   if (disciplineLabel) params.set("discipline", disciplineLabel);
@@ -64,7 +82,9 @@ export function sortPosts(posts: IPost[], order: SortOrder) {
   const sorted = [...posts];
 
   if (order === "titulo") {
-    return sorted.sort((left, right) => left.title.localeCompare(right.title, "pt-BR"));
+    return sorted.sort((left, right) =>
+      left.title.localeCompare(right.title, "pt-BR"),
+    );
   }
 
   return sorted.sort((left, right) => {

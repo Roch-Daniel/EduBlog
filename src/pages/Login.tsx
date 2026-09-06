@@ -89,13 +89,6 @@ export default function Login() {
             {loading ? <LoadingDots /> : "Entrar"}
           </button>
         </form>
-
-        {/* ⚠️ Remover este bloco antes da entrega final — é só para facilitar testes */}
-        <div className="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 space-y-1">
-          <p className="font-medium">Dados de teste</p>
-          <p>Aluno: [email protected] / 123456</p>
-          <p>Professor: [email protected] / 123456</p>
-        </div>
       </div>
     </div>
   );
