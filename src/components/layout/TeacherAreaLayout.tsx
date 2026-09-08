@@ -18,15 +18,21 @@ export default function TeacherAreaLayout() {
           </NavLink>
           <NavLink
             to="/professor/posts"
+            end
             className={({ isActive }) =>
               `${baseItemClass} ${isActive ? "border-teal-700 bg-teal-50 text-teal-700" : ""}`
             }
           >
             Meus Posts
           </NavLink>
-          <span className={`${baseItemClass} cursor-not-allowed opacity-50`}>
+          <NavLink
+            to="/professor/posts/new"
+            className={({ isActive }) =>
+              `${baseItemClass} ${isActive ? "border-teal-700 bg-teal-50 text-teal-700" : ""}`
+            }
+          >
             Novo Post
-          </span>
+          </NavLink>
         </nav>
       </aside>
 

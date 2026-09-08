@@ -5,7 +5,8 @@ import ConfirmModal from "../components/ui/ConfirmModal";
 import { useAuth } from "../hooks/useAuth";
 import { useToast } from "../hooks/useToast";
 import type { IPost } from "../interfaces/IPost";
-import { deletePostRequest, getPostsRequest } from "../services/postService";
+import { deletePostRequest } from "../services/postService";
+import { getTeacherPostsRequest } from "../services/teacherPostService";
 import { formatDate } from "../utils/date";
 import { isPublishedPost } from "../utils/post";
 
@@ -31,7 +32,7 @@ export default function TeacherPosts() {
       try {
         setLoading(true);
         setLoadError("");
-        const response = await getPostsRequest();
+        const response = await getTeacherPostsRequest();
 
         if (ignore) return;
 
@@ -244,6 +245,12 @@ export default function TeacherPosts() {
                           className="font-semibold text-teal-700 transition hover:opacity-75"
                         >
                           Ver
+                        </Link>
+                        <Link
+                          to={`/professor/posts/${post._id}/edit`}
+                          className="font-semibold text-teal-700 transition hover:opacity-75"
+                        >
+                          Editar
                         </Link>
                         <button
                           type="button"

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import type { IPost } from "../interfaces/IPost";
-import { getPostsRequest } from "../services/postService";
+import { getTeacherPostsRequest } from "../services/teacherPostService";
 import { formatDate } from "../utils/date";
 import { isDraftPost, isPublishedPost } from "../utils/post";
 
@@ -19,7 +19,7 @@ export default function TeacherDashboard() {
       try {
         setLoading(true);
         setLoadError("");
-        const response = await getPostsRequest();
+        const response = await getTeacherPostsRequest();
 
         if (ignore) return;
 
