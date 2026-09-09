@@ -24,6 +24,7 @@ export interface IPost {
   discipline: Pick<IDiscipline, "_id" | "label" | "order">;
   author: IPostAuthor;
   status: IPostStatus;
+  isFeatured: boolean;
   createDate: string;
   updateDate: string;
 }
