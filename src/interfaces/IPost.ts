@@ -19,6 +19,7 @@ export interface IPost {
   content: string;
   summary: string;
   imageUrl: string;
+  isFeatured?: boolean;
   series: string;
   semester: string;
   discipline: Pick<IDiscipline, "_id" | "label" | "order">;

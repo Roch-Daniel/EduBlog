@@ -13,6 +13,7 @@ import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsOfUse from "../pages/TermsOfUse";
 import TeacherDashboard from "../pages/TeacherDashboard";
 import TeacherPosts from "../pages/TeacherPosts";
+import TeacherPostForm from "../pages/TeacherPostForm";
 import RequireAuth from "./RequireAuth";
 import NotFound from "../pages/NotFound";
 import RequireRole from "./RequireRole";
@@ -46,6 +47,8 @@ const router = createBrowserRouter([
                   { path: "/professor", element: <Navigate to="/professor/dashboard" replace /> },
                   { path: "/professor/dashboard", element: <TeacherDashboard /> },
                   { path: "/professor/posts", element: <TeacherPosts /> },
+                  { path: "/professor/posts/new", element: <TeacherPostForm key="new" /> },
+                  { path: "/professor/posts/:id/edit", element: <TeacherPostForm key="edit" /> },
                 ],
               },
             ],
