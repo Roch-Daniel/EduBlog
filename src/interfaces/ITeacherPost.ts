@@ -9,11 +9,10 @@ export interface ITeacherPostValues {
   semester: string;
   series: string;
   imageUrl: string;
+  isFeatured: boolean;
 }
 
-export interface ITeacherPostPayload extends Omit<ITeacherPostValues, "imageUrl"> {
-  imageUrl?: string;
-}
+export type ITeacherPostPayload = ITeacherPostValues;
 
 export interface ITeacherPostStatus extends IPostStatus {
   isActive: boolean;
