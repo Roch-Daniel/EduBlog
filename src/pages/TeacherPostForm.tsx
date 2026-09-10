@@ -18,7 +18,7 @@ type FieldErrors = Partial<Record<Field, string>>;
 
 const emptyValues: ITeacherPostValues = {
   title: "", summary: "", content: "", disciplineId: "", statusId: "",
-  semester: "", series: "", imageUrl: "",
+  semester: "", series: "", imageUrl: "", isFeatured: false,
 };
 
 // Mantém a contagem dos campos de texto compatível com a sanitização da API.
@@ -78,7 +78,7 @@ export default function TeacherPostForm() {
         ]);
         if (ignore) return;
 
-        if (post && post.author._id !== user?.id && post.author.email !== user?.email) {
+        if (post && post.author._id !== user?.id) {
           setLoadError("Você só pode editar os seus próprios posts.");
           return;
         }
@@ -94,6 +94,7 @@ export default function TeacherPostForm() {
           semester: post.semester ?? "",
           series: post.series ?? "",
           imageUrl: post.imageUrl ?? "",
+          isFeatured: post.isFeatured ?? false,
         } : { ...emptyValues });
       } catch (error) {
         if (ignore) return;
@@ -106,9 +107,9 @@ export default function TeacherPostForm() {
 
     void loadForm();
     return () => { ignore = true; };
-  }, [id, user?.id, user?.email]);
+  }, [id, user?.id]);
 
-  function changeField(field: Field, value: string) {
+  function changeField<F extends Field>(field: F, value: ITeacherPostValues[F]) {
     setValues((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined }));
     setSaveError("");
@@ -183,7 +184,7 @@ export default function TeacherPostForm() {
   const inputClass = "w-full rounded-[10px] border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800 outline-none transition focus:border-teal-700 focus:ring-2 focus:ring-teal-700/20 aria-invalid:border-rose-500 disabled:bg-slate-50";
   const availableCatalogs = disciplines.some((item) => item.isActive) && statuses.some((item) => item.isActive);
 
-  function fieldProps(field: Field) {
+  function fieldProps(field: Exclude<Field, "isFeatured">) {
     return {
       id: `post-${field}`,
       name: field,
@@ -300,6 +301,18 @@ export default function TeacherPostForm() {
             <p className="mt-1 text-xs text-slate-500">Deixe em branco para salvar sem imagem de capa.</p>
             {fieldError("imageUrl")}
           </div>
+
+          <label htmlFor="post-isFeatured" className="flex items-center gap-3 text-sm font-semibold text-slate-700">
+            <input
+              id="post-isFeatured"
+              name="isFeatured"
+              type="checkbox"
+              checked={values.isFeatured}
+              onChange={(event) => changeField("isFeatured", event.target.checked)}
+              className="h-4 w-4 rounded border-slate-300 accent-teal-700 focus:ring-2 focus:ring-teal-700/20"
+            />
+            Marcar post como destaque
+          </label>
 
           {saveError && (
             <div className="rounded-[10px] border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700" role="alert">
