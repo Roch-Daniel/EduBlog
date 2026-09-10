@@ -22,7 +22,7 @@ export default function FilterCheckboxGroup({
               type="checkbox"
               checked={selected.includes(option.value)}
               onChange={() => onToggle(option.value)}
-              className="h-4 w-4 cursor-pointer accent-teal-700 [color-scheme:light]"
+              className="h-4 w-4 cursor-pointer accent-teal-700 scheme-light"
             />
             {option.label}
           </label>
