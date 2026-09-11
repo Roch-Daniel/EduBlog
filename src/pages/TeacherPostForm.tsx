@@ -283,7 +283,7 @@ export default function TeacherPostForm() {
 
   if (loadError) {
     return (
-      <section className={`${cardClass} max-w-5xl`}>
+      <section className={`${cardClass} mx-auto max-w-5xl`}>
         <h1 className="text-2xl font-bold text-slate-900">
           Formulário indisponível
         </h1>
@@ -302,7 +302,7 @@ export default function TeacherPostForm() {
   }
 
   return (
-    <section className="max-w-5xl">
+    <section className="mx-auto max-w-5xl">
       <h1 className="text-3xl font-bold text-slate-900">
         {isEditing ? "Editar Post" : "Novo Post"}
       </h1>

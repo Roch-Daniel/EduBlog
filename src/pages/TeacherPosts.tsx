@@ -122,7 +122,7 @@ export default function TeacherPosts() {
 
   if (loading) {
     return (
-      <section className="max-w-5xl">
+      <section className="mx-auto max-w-5xl">
         <div className="rounded-[14px] border border-slate-200 bg-white p-6 shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
           <p className="text-sm font-medium text-slate-500">Carregando seus posts...</p>
         </div>
@@ -132,7 +132,7 @@ export default function TeacherPosts() {
 
   if (loadError) {
     return (
-      <section className="max-w-5xl">
+      <section className="mx-auto max-w-5xl">
         <div className="rounded-[14px] border border-rose-200 bg-white p-6 shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
           <h1 className="text-2xl font-bold text-slate-900">Meus Posts indisponível</h1>
           <p className="mt-2 text-sm text-slate-600">{loadError}</p>
@@ -142,7 +142,7 @@ export default function TeacherPosts() {
   }
 
   return (
-    <section className="max-w-5xl">
+    <section className="mx-auto max-w-5xl">
       <h1 className="text-3xl font-bold text-slate-900">Meus Posts</h1>
 
       <div className="mt-5 flex flex-wrap gap-2">

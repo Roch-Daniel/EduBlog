@@ -10,4 +10,22 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+let isRedirectingToLogin = false;
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const isLoginRequest = error.config?.url === "/auth/login";
+
+    if (error.response?.status === 401 && !isLoginRequest && !isRedirectingToLogin) {
+      isRedirectingToLogin = true;
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
+      window.location.href = "/login";
+    }
+
+    return Promise.reject(error);
+  },
+);
+
 export default api;

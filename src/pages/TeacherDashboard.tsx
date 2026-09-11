@@ -82,7 +82,7 @@ export default function TeacherDashboard() {
   }
 
   return (
-    <section className="max-w-5xl">
+    <section className="mx-auto max-w-5xl">
       <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
