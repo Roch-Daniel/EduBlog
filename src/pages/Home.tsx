@@ -117,7 +117,7 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="relative min-h-80 overflow-hidden rounded-2xl shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
+        <div className="relative min-h-[416px] overflow-hidden rounded-2xl shadow-[0_8px_24px_rgba(15,23,42,0.08)] md:min-h-80">
           {featuredPosts.length === 0 ? (
             <div className="mt-3 flex min-h-80 flex-col items-center justify-center rounded-2xl bg-white px-6 py-10 text-center shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
               <div
@@ -150,13 +150,13 @@ export default function Home() {
                   <img
                     src={post.imageUrl}
                     alt={post.title}
-                    className="h-full w-full object-cover"
+                    className="h-40 w-full object-cover md:h-full"
                   />
                   <div className="flex flex-col justify-center gap-3 p-8">
                     <h3 className="text-2xl font-bold text-slate-900">
                       {post.title}
                     </h3>
-                    <p className="text-sm leading-6 text-slate-500">
+                    <p className="line-clamp-2 text-sm leading-6 text-slate-500">
                       {post.summary}
                     </p>
                     <p className="text-sm text-slate-500">

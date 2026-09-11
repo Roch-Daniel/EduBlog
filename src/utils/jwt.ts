@@ -1,8 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-
-interface IJwtPayload {
-  exp?: number;
-}
+import type { IJwtPayload } from "../interfaces/IJwtPayload";
 
 export function isTokenExpired(token: string) {
   try {

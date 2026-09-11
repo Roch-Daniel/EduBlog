@@ -377,4 +377,4 @@ A sessão do usuário expira em duas situações, cobrindo tanto o uso ativo qua
 
 ## Relato de desenvolvimento
 
-[PREENCHER: breve relato da equipe sobre desafios enfrentados durante o desenvolvimento, conforme exigido na entrega do Tech Challenge.]
+Algumas alterações no back-end foram necessárias para atender às demandas do front-end. Um exemplo foi a criação do campo `isFeatured` nos posts, utilizado para viabilizar o carrossel de destaques da página inicial. Também identificamos limitações no endpoint de busca (`/posts/search`), como a sensibilidade à acentuação e à grafia exata nos parâmetros `q` e `discipline`, o que exigiu alinhamento com quem mantém a API para entender o comportamento real antes de ajustar o front-end.
