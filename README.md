@@ -264,6 +264,48 @@ A sessão é armazenada em **`sessionStorage`** (não `localStorage`), uma decis
 
 ---
 
+## Busca, filtros e catalogação
+
+A filtragem é dividida em duas camadas, conforme o que a API suporta:
+
+- **No servidor** (`GET /posts/search`, com parâmetros montados por `buildSearchParams`): disciplina, professor e termo de busca.
+- **No cliente** (`utils/filters.ts`, aplicado ao resultado retornado pelo servidor): série e semestre, que a API ainda não aceita como parâmetro.
+
+Cada tela realiza duas chamadas. `GET /posts` fornece apenas as opções exibidas no painel de filtros, enquanto `GET /posts/search` retorna a lista de publicações apresentada ao usuário. As opções do painel não são extraídas do resultado filtrado, pois, nesse caso, selecionar uma disciplina poderia fazer as demais opções desaparecerem e dificultar a alteração dos filtros.
+
+O estado da listagem é armazenado na URL e controlado por um único hook (`usePostFilters`):
+
+```text
+/conteudo/matematica?serie=1º+ano%2C3º+ano&semestre=1&author=Ana+Professora
+```
+
+- **Persistente**: recarregar a página preserva a seleção, sem exigir contexto global.
+- **Tolerante**: parâmetro inválido cai no padrão em vez de quebrar a tela, e valores padrão (`view=grid`, `page=1`) são omitidos para manter a URL legível.
+
+As alterações utilizam `replace` em vez de `push`, evitando que a seleção de vários filtros crie diversas entradas no histórico do navegador.
+
+### Como os filtros combinam
+
+Dentro de um mesmo grupo, os filtros utilizam a relação **OU**, entre grupos diferentes, utilizam a relação **E**. Por exemplo, selecionar "1º ano" e "3º ano" reúne os resultados das duas séries. Ao acrescentar "1º semestre", a listagem passa a exibir apenas as publicações que também atendem a essa condição.
+
+- As opções de série e semestre são extraídas das publicações carregadas, e não de uma lista fixa, pois a API não disponibiliza um catálogo para esses campos.
+- As opções são ordenadas numericamente (`1º ano` aparece antes de `10º ano`), e grupos sem opções não são renderizados.
+- As opções do filtro de professor também são extraídas das publicações para preencher o `<select>`. Por isso, são exibidos apenas professores que já publicaram conteúdo. A filtragem, porém, é realizada pela API por meio do parâmetro `?author=`.
+
+### Busca
+
+A barra de busca do cabeçalho (`SearchBar`) utiliza um `useDebounce` de 300 ms antes de gerar as sugestões. A comparação considera o título, o resumo e o nome do professor, utilizando `normalizeText`. Assim, digitar `celulas`, por exemplo, permite sugerir "Células" no menu de resultados.
+
+- Essa normalização ocorre apenas localmente, na geração das sugestões. O termo submetido é enviado sem alterações para `GET /posts/search?q=`, que ainda exige acentuação e grafia exatas.
+- O menu de sugestões permite navegação pelo teclado com (`↓`/`↑`/`Enter`/`Esc`), além de ser fechado quando o usuário clica fora dele.
+- O componente fornece semântica de combobox por meio de atributos como (`role="combobox"`, `aria-activedescendant`).
+
+### Estados de interface
+
+`LoadingState`, `ErrorState` e `EmptyState` cobrem os possíveis estados da listagem: carregamento, falha de rede, disciplina sem conteúdo publicado e filtro sem resultados. Neste último caso, há um atalho para limpar a seleção. Além disso, a paginação corrige automaticamente páginas fora do intervalo, evitando que a lista fique vazia quando um filtro reduz o total de resultados.
+
+---
+
 ## Integração com a API
 
 Base URL configurada via `VITE_API_URL`. Principais endpoints consumidos:
@@ -335,4 +377,4 @@ A sessão do usuário expira em duas situações, cobrindo tanto o uso ativo qua
 
 ## Relato de desenvolvimento
 
-[PREENCHER: breve relato da equipe sobre desafios enfrentados durante o desenvolvimento, conforme exigido na entrega do Tech Challenge.]
+Algumas alterações no back-end foram necessárias para atender às demandas do front-end. Um exemplo foi a criação do campo `isFeatured` nos posts, utilizado para viabilizar o carrossel de destaques da página inicial. Também identificamos limitações no endpoint de busca (`/posts/search`), como a sensibilidade à acentuação e à grafia exata nos parâmetros `q` e `discipline`, o que exigiu alinhamento com quem mantém a API para entender o comportamento real antes de ajustar o front-end.
