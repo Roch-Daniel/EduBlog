@@ -1,14 +1,16 @@
-# EduBlog
+# EduBlog — Front-end
 
 Interface web do EduBlog, uma plataforma de blogging educacional que permite a professores publicar conteúdo por disciplina e a alunos consultá-lo. Este repositório contém apenas o **front-end**; o back-end (API REST) está em um repositório separado.
 
-Projeto desenvolvido para o **Tech Challenge** — [nome da pós-graduação/curso].
+Projeto desenvolvido para o **Tech Challenge**.
 
 ## Links do projeto
 
-- Repositório do back-end: [PREENCHER]
-- API em produção: `https://blog-api-dnfx.onrender.com`
-- Documentação Swagger da API: `https://blog-api-dnfx.onrender.com/docs`
+- Repositório do front-end: [EduBlog](https://github.com/Roch-Daniel/EduBlog)
+- Repositório do back-end: [blog-api](https://github.com/Roch-Daniel/blog-api)
+- Aplicação em produção: [EduBlog - Aplicação Online](https://edublog-lp66.onrender.com)
+- API em produção: [API - EduBlog](https://blog-api-dnfx.onrender.com)
+- Documentação Swagger da API: [API - EduBlog](https://blog-api-dnfx.onrender.com/docs)
 - Apresentação em vídeo: [PREENCHER]
 
 ---
@@ -47,7 +49,7 @@ Projeto desenvolvido para o **Tech Challenge** — [nome da pós-graduação/cur
 
 Diferente do enunciado original (que previa listagem pública de posts), o time optou por **exigir login para acesso a qualquer página**, incluindo a listagem. Após autenticado, o papel do usuário (`PROFESSOR` ou `ALUNO`) é retornado diretamente pela API na resposta de login e convertido internamente pelo front-end (`professor`/`aluno`) para uso nas telas e nas guardas de rota.
 
-> ⚠️ Importante: a checagem de papel no front-end é apenas uma camada de **experiência de usuário** (esconder botões, bloquear rotas). A autorização real e vinculante ocorre no back-end, que valida o token JWT e o papel do usuário a cada requisição de escrita — o front-end nunca deve ser a única barreira de segurança.
+> ⚠️ **Importante:** a checagem de papel no front-end é apenas uma camada de **experiência de usuário** (esconder botões, bloquear rotas). A autorização real e vinculante ocorre no back-end, que valida o token JWT e o papel do usuário a cada requisição de escrita — o front-end nunca deve ser a única barreira de segurança.
 
 ---
 
@@ -190,53 +192,44 @@ npm run dev
 
 Acesse em `http://localhost:5173`.
 
-### Credenciais de teste
-
-> ⚠️ Remover esta seção (e o bloco correspondente na tela de login) antes da entrega final, ou substituir por instruções internas de QA.
-
-| Papel     | E-mail                      | Senha         |
-| --------- | --------------------------- | ------------- |
-| Aluno     | `[PREENCHER]`               | `[PREENCHER]` |
-| Professor | `[PREENCHER]@professor.com` | `[PREENCHER]` |
-
-## Rodando com Docker
-
-```bash
-# Ambiente de desenvolvimento (hot-reload)
-docker compose up frontend-dev
-
-# Build de produção, servido via Nginx
-docker compose up frontend-prod --build
-```
-
-| Serviço         | URL                     | Uso                                |
-| --------------- | ----------------------- | ---------------------------------- |
-| `frontend-dev`  | `http://localhost:5173` | Desenvolvimento com hot-reload     |
-| `frontend-prod` | `http://localhost:8080` | Build otimizado, servido por Nginx |
-
-O `Dockerfile` usa multi-stage build: um estágio de build (Node) gera os arquivos estáticos, e o estágio final usa apenas Nginx para servi-los — sem Node.js rodando em produção. O `nginx.conf` inclui fallback de rotas (`try_files`) para suportar o roteamento client-side do React Router.
-
----
-
 ## Estrutura de pastas
 
-```
-src/
-├── components/
-│   ├── layout/          # Header, Footer, Layout, UserMenu (estrutura fixa da aplicação)
-│   ├── filters/         # Painel de filtros da listagem (FilterPanel, FilterCheckboxGroup)
-│   ├── posts/           # Exibição de posts (PostCard, PostListItem, PostCollection, ViewToggle)
-│   └── ui/              # Blocos de interface reutilizáveis (LoadingState, ErrorState, EmptyState, Pagination, ToastContainer)
-├── pages/                # Uma página = uma rota (Home, Login, ContentPlaceholder, Discipline, SearchResults, PostView...)
-├── context/               # Contextos React (AuthContext, ToastContext e suas definições)
-├── hooks/                 # Hooks customizados (useAuth, useToast, useClickOutside, useDebounce, usePostFilters)
-├── routes/                # Configuração de rotas e guardas (RequireAuth, RequireRole)
-├── services/              # Camada de comunicação com a API (authService, postService, catalogService)
-├── interfaces/            # Tipos e interfaces TypeScript
-├── utils/                 # Funções puras reutilizáveis (formatação de data, slugs, expiração de token, filtros, paginação, tempo de leitura)
-├── types/                 # Tipos auxiliares que não representam entidades de domínio
-├── App.tsx
-└── main.tsx
+```text
+.
+├── public/                 # Recursos estáticos servidos na raiz (favicons, manifest)
+├── src/
+│   ├── assets/             # Recursos visuais importados pelo código (logos, imagens, ícones)
+│   ├── components/
+│   │   ├── layout/         # Header, Footer, Layout, UserMenu (estrutura fixa da aplicação)
+│   │   ├── filters/        # Painel de filtros da listagem (FilterPanel, FilterCheckboxGroup)
+│   │   ├── posts/          # Exibição de posts (PostCard, PostListItem, PostCollection, ViewToggle)
+│   │   └── ui/             # Blocos reutilizáveis (LoadingState, ErrorState, EmptyState, Pagination, ToastContainer)
+│   ├── context/            # Contextos React (AuthContext, ToastContext)
+│   ├── hooks/              # Hooks customizados (useAuth, useToast, useClickOutside, useDebounce, usePostFilters)
+│   ├── interfaces/         # Tipos e interfaces TypeScript de domínio
+│   ├── pages/              # Páginas atreladas a rotas (Home, Login, Discipline, SearchResults, PostView...)
+│   ├── routes/             # Configuração de rotas e guardas (RequireAuth, RequireRole)
+│   ├── services/           # Camada de comunicação com a API (authService, postService, catalogService)
+│   ├── types/              # Tipos utilitários e auxiliares gerais
+│   ├── utils/              # Funções utilitárias puras (datas, slugs, expiração de token, paginação, filtros)
+│   ├── App.css             # Estilos específicos do componente App
+│   ├── App.tsx             # Componente raiz da aplicação com provedores e rotas
+│   ├── index.css           # Diretivas do Tailwind CSS e estilos globais
+│   └── main.tsx            # Ponto de entrada do React DOM
+├── .dockerignore           # Arquivos ignorados pelo build do Docker
+├── .env                    # Variáveis de ambiente locais
+├── .gitignore              # Arquivos ignorados pelo Git
+├── docker-compose.yml      # Orquestração dos containers (dev e prod)
+├── Dockerfile              # Instruções de multi-stage build da imagem
+├── eslint.config.js        # Regras de linting do código
+├── index.html              # Template HTML base servido pelo Vite
+├── nginx.conf              # Configuração do servidor Nginx para o build de produção
+├── package.json            # Dependências e scripts do projeto
+├── tsconfig.json           # Configurações raiz do compilador TypeScript
+├── tsconfig.app.json       # Configurações do TypeScript para o código em src
+├── tsconfig.node.json      # Configurações do TypeScript para scripts de build (Vite/Node)
+└── vite.config.ts          # Configurações do empacotador e servidor de dev Vite
+
 ```
 
 ### Convenções adotadas
@@ -316,7 +309,7 @@ Base URL configurada via `VITE_API_URL`. Principais endpoints consumidos:
 | GET    | `/posts`               | Pública      | Listagem (apenas posts com status ativo) |
 | GET    | `/posts/all`           | Professor    | Página administrativa (inclui rascunhos) |
 | GET    | `/posts/:id`           | Pública      | Leitura de post individual               |
-| POST   | `/posts`               | Professor    | Criação de post                          |
+| POST   | `/posts`               | Pública      | Criação de post                          |
 | PUT    | `/posts/:id`           | Professor    | Edição de post                           |
 | DELETE | `/posts/:id`           | Professor    | Exclusão de post                         |
 | GET    | `/catalog/disciplines` | Pública      | Popula filtros, navegação e formulários  |

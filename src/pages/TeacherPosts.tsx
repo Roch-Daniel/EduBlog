@@ -37,7 +37,8 @@ export default function TeacherPosts() {
         if (ignore) return;
 
         const teacherPosts = response.filter(
-          (post) => post.author._id === user?.id || post.author.email === user?.email,
+          (post) =>
+            post.author._id === user?.id || post.author.email === user?.email,
         );
 
         setPosts(teacherPosts);
@@ -67,7 +68,8 @@ export default function TeacherPosts() {
   const filteredPosts = useMemo(() => {
     const sortedPosts = [...posts].sort(
       (left, right) =>
-        new Date(right.createDate).getTime() - new Date(left.createDate).getTime(),
+        new Date(right.createDate).getTime() -
+        new Date(left.createDate).getTime(),
     );
 
     const normalizedSearchTerm = searchTerm.trim().toLowerCase();
@@ -124,7 +126,9 @@ export default function TeacherPosts() {
     return (
       <section className="mx-auto max-w-5xl">
         <div className="rounded-[14px] border border-slate-200 bg-white p-6 shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
-          <p className="text-sm font-medium text-slate-500">Carregando seus posts...</p>
+          <p className="text-sm font-medium text-slate-500">
+            Carregando seus posts...
+          </p>
         </div>
       </section>
     );
@@ -134,7 +138,9 @@ export default function TeacherPosts() {
     return (
       <section className="mx-auto max-w-5xl">
         <div className="rounded-[14px] border border-rose-200 bg-white p-6 shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
-          <h1 className="text-2xl font-bold text-slate-900">Meus Posts indisponível</h1>
+          <h1 className="text-2xl font-bold text-slate-900">
+            Meus Posts indisponível
+          </h1>
           <p className="mt-2 text-sm text-slate-600">{loadError}</p>
         </div>
       </section>
@@ -211,11 +217,21 @@ export default function TeacherPosts() {
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-slate-50">
-                <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Título</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Disciplina</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Status</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Criado em</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">Ações</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">
+                  Título
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">
+                  Disciplina
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">
+                  Status
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">
+                  Criado em
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700">
+                  Ações
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -223,9 +239,16 @@ export default function TeacherPosts() {
                 const published = isPublishedPost(post);
 
                 return (
-                  <tr key={post._id} className="border-t border-slate-200 hover:bg-slate-50">
-                    <td className="px-4 py-3 text-sm text-slate-800">{post.title}</td>
-                    <td className="px-4 py-3 text-sm text-slate-700">{post.discipline.label}</td>
+                  <tr
+                    key={post._id}
+                    className="border-t border-slate-200 hover:bg-slate-50"
+                  >
+                    <td className="px-4 py-3 text-sm text-slate-800">
+                      {post.title}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-slate-700">
+                      {post.discipline.label}
+                    </td>
                     <td className="px-4 py-3">
                       <span
                         className={`inline-block rounded-md px-3 py-1 text-xs font-semibold ${
@@ -237,7 +260,9 @@ export default function TeacherPosts() {
                         {published ? "Publicado" : "Rascunho"}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-slate-700">{formatDate(post.createDate)}</td>
+                    <td className="px-4 py-3 text-sm text-slate-700">
+                      {formatDate(post.createDate)}
+                    </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3 text-sm">
                         <Link
@@ -255,7 +280,7 @@ export default function TeacherPosts() {
                         <button
                           type="button"
                           onClick={() => setPostToDelete(post)}
-                          className="font-semibold text-rose-600 transition hover:opacity-75"
+                          className="cursor-pointer font-semibold text-rose-600 transition hover:opacity-75"
                         >
                           Excluir
                         </button>
