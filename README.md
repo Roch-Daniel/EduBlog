@@ -309,7 +309,7 @@ Base URL configurada via `VITE_API_URL`. Principais endpoints consumidos:
 | GET    | `/posts`               | Pública      | Listagem (apenas posts com status ativo) |
 | GET    | `/posts/all`           | Professor    | Página administrativa (inclui rascunhos) |
 | GET    | `/posts/:id`           | Pública      | Leitura de post individual               |
-| POST   | `/posts`               | Pública      | Criação de post                          |
+| POST   | `/posts`               | Professor    | Criação de post                          |
 | PUT    | `/posts/:id`           | Professor    | Edição de post                           |
 | DELETE | `/posts/:id`           | Professor    | Exclusão de post                         |
 | GET    | `/catalog/disciplines` | Pública      | Popula filtros, navegação e formulários  |
@@ -360,11 +360,13 @@ A sessão do usuário expira em duas situações, cobrindo tanto o uso ativo qua
 ## Problemas conhecidos / próximos passos
 
 - [ ] Remover bloco de credenciais de teste da tela de login antes da entrega final.
-- [ ] Chamadas a `/posts` e `/catalog/disciplines` são feitas de forma independente pelo `Header` e pela `Home`, sem cache compartilhado — avaliar mover para um Context ou adotar uma lib de cache (React Query/SWR) em iteração futura.
+- [ ] Confirmar arquitetura de busca (`/posts/search` server-side vs. filtragem client-side via `CatalogContext`) e alinhar a documentação de acordo — ver nota em [Busca, filtros e catalogação](#busca-filtros-e-catalogação).
+- [ ] Chamadas a `/posts` e `/catalog/disciplines` podem estar sendo feitas de forma independente por múltiplas telas, sem cache compartilhado — avaliar centralizar em um Context ou adotar uma lib de cache (React Query/SWR), se ainda não resolvido.
 - [ ] Filtro de posts publicados compara `status.label` como string (`"Publicado"`); considerar usar um identificador mais estável (`_id` ou um campo booleano dedicado) para reduzir acoplamento com o texto exibido.
-- [ ] Páginas de criação, edição e administração de posts (`/posts/new`, `/posts/:id/edit`, `/admin`) ainda não implementadas.
+- [ ] `GET /posts/all` não é filtrado por autor no servidor — ver [Escopo de dados na área do professor](#escopo-de-dados-na-área-do-professor).
+- [ ] Redirecionamento automático por token expirado (`window.location.href` no interceptor 401) não preserva a rota de origem, diferente do fluxo padrão de `RequireAuth`.
 - [ ] Rotas `/perfil` e `/favoritos`, referenciadas no menu do usuário, ainda não possuem páginas implementadas.
-- [ ] [PREENCHER conforme o time avançar: comentários, paginação, upload de imagem, etc.]
+- [ ] [PREENCHER conforme o time avançar: comentários, upload de imagem, testes automatizados, etc.]
 
 ---
 
