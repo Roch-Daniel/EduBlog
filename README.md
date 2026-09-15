@@ -365,7 +365,7 @@ A sessão do usuário expira em duas situações, cobrindo tanto o uso ativo qua
 - [ ] Filtro de posts publicados compara `status.label` como string (`"Publicado"`); considerar usar um identificador mais estável (`_id` ou um campo booleano dedicado) para reduzir acoplamento com o texto exibido.
 - [ ] `GET /posts/all` não é filtrado por autor no servidor — ver [Escopo de dados na área do professor](#escopo-de-dados-na-área-do-professor).
 - [ ] Redirecionamento automático por token expirado (`window.location.href` no interceptor 401) não preserva a rota de origem, diferente do fluxo padrão de `RequireAuth`.
-- [ ] Rotas `/perfil` e `/favoritos`, referenciadas no menu do usuário, ainda não possuem páginas implementadas.
+- [ ] Rota `/favoritos`, referenciada no menu do usuário, ainda não possuem página implementada.
 - [ ] [PREENCHER conforme o time avançar: comentários, upload de imagem, testes automatizados, etc.]
 
 ---
