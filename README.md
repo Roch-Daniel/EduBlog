@@ -359,7 +359,6 @@ A sessão do usuário expira em duas situações, cobrindo tanto o uso ativo qua
 
 ## Problemas conhecidos / próximos passos
 
-- [ ] Remover bloco de credenciais de teste da tela de login antes da entrega final.
 - [ ] Confirmar arquitetura de busca (`/posts/search` server-side vs. filtragem client-side via `CatalogContext`) e alinhar a documentação de acordo — ver nota em [Busca, filtros e catalogação](#busca-filtros-e-catalogação).
 - [ ] Chamadas a `/posts` e `/catalog/disciplines` podem estar sendo feitas de forma independente por múltiplas telas, sem cache compartilhado — avaliar centralizar em um Context ou adotar uma lib de cache (React Query/SWR), se ainda não resolvido.
 - [ ] Filtro de posts publicados compara `status.label` como string (`"Publicado"`); considerar usar um identificador mais estável (`_id` ou um campo booleano dedicado) para reduzir acoplamento com o texto exibido.
