@@ -246,7 +246,7 @@ Acesse em `http://localhost:5173`.
 O controle de acesso é implementado em duas camadas independentes, usando rotas aninhadas do React Router:
 
 1. **`RequireAuth`** — verifica se existe uma sessão ativa (`isAuthenticated`) e se o token ainda não expirou. Se não, redireciona para `/login`, preservando a rota de origem para retomar a navegação após o login.
-2. **`RequireRole`** — aplicado apenas às rotas de escrita (`/posts/new`, `/posts/:id/edit`, `/admin`), verifica se o papel do usuário logado é `PROFESSOR`.
+2. **`RequireRole`** — aplicado apenas às rotas de escrita (`/posts/new`, `/posts/:id/edit`), verifica se o papel do usuário logado é `PROFESSOR`.
 
 O estado de autenticação é gerenciado via **Context API** (`AuthContext`) e passa por duas verificações de validade:
 
