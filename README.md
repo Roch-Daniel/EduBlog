@@ -11,7 +11,7 @@ Projeto desenvolvido para o **Tech Challenge**.
 - Aplicação em produção: [EduBlog - Aplicação Online](https://edublog-lp66.onrender.com)
 - API em produção: [API - EduBlog](https://blog-api-dnfx.onrender.com)
 - Documentação Swagger da API: [API - EduBlog](https://blog-api-dnfx.onrender.com/docs)
-- Apresentação em vídeo: [PREENCHER]
+- Apresentação em vídeo: [Vídeo da apresentação](https://drive.google.com/file/d/18Vw2-YByflsBSj4t-Wm-GdGxpVSF6O4U/view?usp=sharing)
 
 ---
 
